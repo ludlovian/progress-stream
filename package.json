@@ -1,0 +1,32 @@
+{
+  "name": "progress-stream",
+  "version": "0.1.0",
+  "description": "Progress emitting transform stream",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist/ node_modules/.cache/ .nyc_output/ coverage/",
+    "format": "prettier-standard src/*.js test/*.js",
+    "lint": "standard src/*.js test/*.js | snazzy",
+    "build": "rollup -c rollup.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ludlovian/progress-stream.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ludlovian/progress-stream/issues"
+  },
+  "homepage": "https://github.com/ludlovian/progress-stream#readme",
+  "devDependencies": {
+    "esm": "^3.2.25",
+    "prettier-standard": "^15.0.1",
+    "rollup": "^1.27.4",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-terser": "^5.1.2",
+    "snazzy": "^8.0.0",
+    "standard": "^14.3.1"
+  }
+}
