@@ -23,6 +23,7 @@ function progress (opts = {}) {
   if (typeof onProgress === 'function') {
     ts.on('progress', onProgress);
   }
+  ts.on('pipe', src => src.on('error', err => ts.emit(err)));
   return ts
   function reportProgress () {
     ts.emit('progress', { bytes, done, ...rest });

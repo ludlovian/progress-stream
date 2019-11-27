@@ -28,6 +28,8 @@ export default function progress (opts = {}) {
     ts.on('progress', onProgress)
   }
 
+  ts.on('pipe', src => src.on('error', err => ts.emit(err)))
+
   return ts
 
   function reportProgress () {
