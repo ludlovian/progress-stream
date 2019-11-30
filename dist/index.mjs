@@ -5,6 +5,7 @@ function progress (opts = {}) {
   let interval;
   let bytes = 0;
   let done = false;
+  let error;
   const ts = new Transform({
     transform (chunk, encoding, cb) {
       bytes += chunk.length;
@@ -14,7 +15,7 @@ function progress (opts = {}) {
       if (interval) clearInterval(interval);
       done = true;
       reportProgress();
-      cb();
+      cb(error);
     }
   });
   if (progressInterval) {
@@ -23,10 +24,15 @@ function progress (opts = {}) {
   if (typeof onProgress === 'function') {
     ts.on('progress', onProgress);
   }
-  ts.on('pipe', src => src.on('error', err => ts.emit(err)));
+  ts.on('pipe', src =>
+    src.on('error', err => {
+      error = error || err;
+      ts.emit(err);
+    })
+  );
   return ts
   function reportProgress () {
-    ts.emit('progress', { bytes, done, ...rest });
+    if (!error) ts.emit('progress', { bytes, done, ...rest });
   }
 }
 
