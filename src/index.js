@@ -32,7 +32,7 @@ export default function progress (opts = {}) {
   ts.on('pipe', src =>
     src.on('error', err => {
       error = error || err
-      ts.emit(err)
+      ts.emit('error', err)
     })
   )
 
