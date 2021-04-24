@@ -1,4 +1,6 @@
-import test from 'ava'
+import { test } from 'uvu'
+import * as assert from 'uvu/assert'
+
 import { Transform, Readable } from 'stream'
 import { finished } from 'stream/promises'
 
@@ -6,7 +8,7 @@ import progress from '../src/index.mjs'
 
 test('construction', t => {
   const p = progress()
-  t.true(p instanceof Transform)
+  assert.ok(p instanceof Transform)
 })
 
 test('basic progress reporting', async t => {
@@ -29,10 +31,14 @@ test('basic progress reporting', async t => {
   source.push(null)
   await pOver
 
-  t.snapshot(calls)
+  assert.equal(calls, [
+    { bytes: 3, done: false, foo: 'bar' },
+    { bytes: 6, done: false, foo: 'bar' },
+    { bytes: 6, done: true, foo: 'bar' }
+  ])
 })
 
-test('passes on errors', async t => {
+test('passes on errors', async () => {
   const source = new Readable({ read () {} })
   const err = new Error('Oops')
 
@@ -42,9 +48,16 @@ test('passes on errors', async t => {
 
   Promise.resolve().then(() => source.emit('error', err))
 
-  await t.throwsAsync(finished(p), {
-    is: err
-  })
+  await finished(p).then(
+    () => {
+      assert.unreachable()
+    },
+    e => {
+      assert.is(e, err)
+    }
+  )
 })
+
+test.run()
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))

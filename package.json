@@ -10,7 +10,7 @@
     "clean": "rm -rf node_modules/.cache/ coverage/",
     "format": "prettier-standard {src,test}/*.mjs",
     "lint": "standard {src,test}/*.mjs | snazzy",
-    "test": "c8 ava",
+    "test": "c8 uvu",
     "coverage": "npm run test && c8 report --reporter=html && sirv coverage -H '0.0.0.0' -p 8000"
   },
   "repository": {
@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/ludlovian/progress-stream#readme",
   "devDependencies": {
-    "ava": "^3.15.0"
+    "uvu": "^0.5.1"
   }
 }
