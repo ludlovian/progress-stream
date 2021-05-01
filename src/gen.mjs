@@ -10,7 +10,7 @@ export default function progressStream ({
     try {
       for await (const chunk of source) {
         bytes += chunk.length
-        yield source
+        yield chunk
       }
       done = true
       report()

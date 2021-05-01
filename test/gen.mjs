@@ -17,7 +17,8 @@ test('basic progress reporting', async t => {
   async function * sink (source) {
     // eslint-disable-next-line no-unused-vars
     for await (const chunk of source) {
-      // do nothing
+      assert.type(chunk, 'string')
+      assert.ok(['foo', 'bar'].includes(chunk))
     }
   }
 
