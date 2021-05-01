@@ -1,13 +1,23 @@
 # progress-stream
+
+**NOTE** You should be using the **/gen** import now.
+
 Progress monitoring transform stream
 
 ## API
-`const stream = progressStream(opts)`
+```
+import progressStream from 'progress-stream/gen'
 
-Creates a progress monitoring transform stream that emits `progress` events with shape `{ bytes, done, ...rest }`
+const progress = progressStream(opts)
+```
 
 Options:
-- `onProgress` - if set, will be attached to the `progress` event
-- `progressInterval` - how often to send updates (in ms)
+- `onProgress` - callback to call to report on progress
+- `interval` - how often to do this
 
-One final event (with `done=true`) will be sent at the end of the stream
+The callback receives an object with:
+- `bytes` - how many bytes
+- `done` - is it done
+and any other items included in the constructor object.
+
+One final call (with `done=true`) will be made at the end of the stream
